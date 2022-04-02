@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Simple Results
+{% endblock %}
+
+{% block content %}
+    <h1>Results</h1>
+    <section id="response">
+        <h2>Your Response</h2>
+        <p>
+            You responded that your star sign is {{ response_sign }}, that you 
+            have the {{ response_personality }} personality, and you selected the 
+            number {{ response_selection }}. 
+        </p>
+        <p>
+            {{ response_sign_rate }}% of other respondants are also {{ response_sign }}. Your number was chosen by 
+            {{ response_sign_slection_rate }} of other {{ response_sign }} respondants also picked 
+            {{ response_selection}}
+        </p>
+        <p>
+            {{ response_personality_rate }}% of other respondants also have a {{ response_personality }}.
+            {{ response_personality_selection_rate }}% of others with your same personality type also chose the number {{ response_selection }}.
+        </p>
+    </section>
+{% endblock %}
+    

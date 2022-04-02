@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Simple Site 
+{% endblock %}
+
+{% block local_style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='home_style.css')}}">
+{% endblock %}
+{% block content %}
+    <main>
+        <h1>This is a Simple Site</h1>
+        <p>I built this website to practice fullstack developement with Flask. Feel free to stay a while, look around, and answer a few questions!</p>
+    </main>
+    <form action="/submit">
+        <!--<label for="sign">Select your star sign</label>
+        <select name="sign" id="sign">
+            {% for sign in signs %}
+                <option value="{{ sign[0] }}">{{ sign[1].capitalize() }}</option>
+            {% endfor %}
+        </select>-->
+        <div class="img-radio-group">
+            <div class="label">
+                Choose your sign.
+            </div>
+            <div class="radio-container">
+                {% for sign in signs %}
+                    <div class="radio-option">
+                        <label for="s{{ sign[0] }}">
+                            {{ sign[1].capitalize() }}
+                        </label>
+                        <input id="s{{ sign[0] }}" type="radio" name="sign" value="{{ sign[0] }}"/>
+                        <img src="{{url_for('static', filename='noun-'+sign[1] + '.svg')}}"><br>
+                    </div> 
+                {% endfor %}
+            </div>
+        </div>
+        <br>
+        <div id="personality-radio-group" role="group" aria-labelledby="personality-head">
+            <h3 id="personality-head">Select your Myers Brigg Personality</h3>
+            <div class="radio-container">
+            {% for type in personalities %}
+                <div class="radio-option">
+                    <label for="p{{ type[0] }}">
+                        {{ type[1].upper() }}
+                    </label>
+                    <input id="p{{ type[0] }}" type="radio" name="personality" value="{{ type[0] }}"/>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <!--<select name="personality" id="personality">
+            {% for type in personalities %}
+                <option value="{{ type[0] }}">{{ type[1].upper() }}</option>
+            {% endfor %}
+        </select>-->
+
+        <br>
+        <label for="selection">Now select a number</label>
+        <select name="selection" id="selection">
+            {% for i in range(1,10) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit">
+    </form>
+{% endblock %}
