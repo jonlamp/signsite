@@ -19,32 +19,39 @@
                 <option value="{{ sign[0] }}">{{ sign[1].capitalize() }}</option>
             {% endfor %}
         </select>-->
-        <div class="img-radio-group">
-            <div class="label">
-                Choose your sign.
-            </div>
+        <div class="img-radio-group" role="radiogroup" aria-label="sign" aria-labelledby="sign-head">
+            <h2 id="sign-head">
+                Choose your sign
+            </h2>
             <div class="radio-container">
                 {% for sign in signs %}
                     <div class="radio-option">
                         <label for="s{{ sign[0] }}">
-                            {{ sign[1].capitalize() }}
-                        </label>
-                        <input id="s{{ sign[0] }}" type="radio" name="sign" value="{{ sign[0] }}"/>
-                        <img src="{{url_for('static', filename='noun-'+sign[1] + '.svg')}}"><br>
+                            <input required id="s{{ sign[0] }}" type="radio" name="sign" value="{{ sign[0] }}"/>
+                            <div aria-hidden="true" class="visible-label">
+                                <img src="{{url_for('static', filename='noun-'+sign[1] + '.svg')}}"><br>
+                                {{ sign[1].capitalize() }}
+                            </div>
+                            <span class="screenreader-label">{{ sign[1].capitalize() }}</span>
+                        </label>  
                     </div> 
                 {% endfor %}
             </div>
         </div>
         <br>
-        <div id="personality-radio-group" role="group" aria-labelledby="personality-head">
-            <h3 id="personality-head">Select your Myers Brigg Personality</h3>
+        <div id="personality-radio-group" role="radiogroup" aria-labelledby="personality-head">
+            <h2 id="personality-head">Select your personality type</h2>
             <div class="radio-container">
             {% for type in personalities %}
                 <div class="radio-option">
                     <label for="p{{ type[0] }}">
-                        {{ type[1].upper() }}
+                        <input required id="p{{ type[0] }}" type="radio" name="personality" value="{{ type[0] }}"/>
+                        <div aria-hidden="true" class="visible-label">
+                            {{ type[1].upper() }}
+                        </div>
+                        <span class="screenreader-label">{{ type[1].upper() }}</span>
+
                     </label>
-                    <input id="p{{ type[0] }}" type="radio" name="personality" value="{{ type[0] }}"/>
                 </div>
             {% endfor %}
             </div>
@@ -56,13 +63,30 @@
         </select>-->
 
         <br>
-        <label for="selection">Now select a number</label>
+        <div id="choice-radio-group" role="radiogroup" aria-labelledby="choice-head">
+            <h2 id="choice-head">Pick a number between one and ten</h2>
+            <div class="radio-container">
+            {% for i in range(1,11) %}
+                <div class="radio-option">
+                    <label for="c{{ i }}">
+                        <input required id="c{{ i }}" type="radio" name="selection" value="{{ i }}"/>
+                        <div aria-hidden="true" class="visible-label">
+                            {{ i }}
+                        </div>
+                        <span class="screenreader-label">{{ i }}</span>
+
+                    </label>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        <!--<label for="selection">Now select a number</label>
         <select name="selection" id="selection">
             {% for i in range(1,10) %}
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
         </select>
-        <br>
+        <br>-->
         <input type="submit">
     </form>
 {% endblock %}

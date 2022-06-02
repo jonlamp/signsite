@@ -1,4 +1,21 @@
 body {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
-    background-color: rgba(255, 245, 245, 0.856);
+    background-color: #edf2f4;
+    padding: 10px 50px;
+    font-family: 'Open Sans', sans-serif;
+    color: #2b2d42;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Nunito',sans-serif;
+}
+h1{ 
+    font-size: 3em;
+    font-weight: 900;
+}
+form {
+    margin: 2vh 10vw;
+}
+button, input[type='submit'] {
+    padding:10px;
+    font-size: 1em;
 }

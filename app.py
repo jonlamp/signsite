@@ -1,14 +1,15 @@
 from cgi import test
 from distutils.command.config import config
 from os import curdir
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, jsonify
+from scripts.utilities import *
 import sqlite3
 
-app=Flask(__name__)
-app.config['ENV'] = "development"
 
-def get_db_connection():
-    conn = sqlite3.connect('database.db')
+app=Flask(__name__)
+
+def get_db_connection(name):
+    conn = sqlite3.connect(name)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -109,6 +110,8 @@ def submitted(submission_id):
     response_personality_rate = round((personalities[response_personality] / personalities_total) * 100,1)
     response_personality_selection_rate = 0
 
+    user_data = get_user_data_dict(submission_id)
+
     return render_template(
         'results.html',
         response_sign = response_sign,
@@ -117,7 +120,16 @@ def submitted(submission_id):
         response_sign_rate = response_sign_rate,
         response_sign_selection_rate = response_sign_selection_rate,
         response_personality_rate = response_personality_rate,
-        response_personality_selection_rate = response_personality_selection_rate
+        response_personality_selection_rate = response_personality_selection_rate,
+        user_data = user_data
     )
 
-    
+@app.route('/api/<int:submission_id>')
+def api_call(submission_id):
+    data = get_totals()
+    user_response = get_user_response(submission_id)
+    result = {
+        "user_response": user_response,
+        "data": data
+    }
+    return jsonify(result)

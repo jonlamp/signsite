@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/results_style.css">
+</head>
+<body>
+    <header>
+        <!--<div id="header-main">
+            Simple Site
+        </div>-->
+    </header>
+    <div id="content">
+        <div id="intro" class="section">
+            <h1> Your Response </h1>
+            <p>
+                You responded that your star sign is <span class="sign"></span>, that you 
+                have the <span class="mbti"></span> personality, and you selected the 
+                number {{ response_selection }}. 
+            </p>
+            <p>
+                {{ response_sign_rate }}% of other respondants are also {{ response_sign }}. 
+                {{ response_sign_slection_rate }} of other {{ response_sign }} respondants also picked 
+                {{ response_selection}}
+            </p>
+            <p>
+                {{ response_personality_rate }}% of other respondants also have a {{ response_personality }}.
+                {{ response_personality_selection_rate }}% of others with your same personality type also chose the number {{ response_selection }}.
+            </p>
+        </div>
+        <div id="sign-container" class="section">
+            <h2>Your Sign</h2>
+            <p>
+                Your sign is <span class="sign accent-text"></span>.
+            </p>
+            <button onclick="generateBarChart(getSignData(),'#sign-bargraph .chart','Pisces')">Generate Graph</button>
+            <figure id="sign-bargraph" class="bargraph">
+                <div class="chart-container">
+                    <div class="chart"></div>
+                </div>
+            </figure>
+        </div>
+        <div id="personality" class="section">
+            <h2>Your Personality</h2>
+            <p>
+                You have an <span class="mbti accent-text"></span> personality.
+            </p>
+            <button onclick="generateBarChart(getPersonalityData(),'#mbti-bargraph .chart','INTJ')">Generate Graph</button>
+            <figure id="mbti-bargraph" class="bargraph">
+                <div class="chart-container">
+                    <div class="chart"></div>
+                </div>
+            </figure>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/static/scripts.js"></script>
+</body>
+

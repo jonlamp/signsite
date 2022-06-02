@@ -4,6 +4,10 @@
     Simple Results
 {% endblock %}
 
+{% block local_style %}
+<link rel="stylesheet" href="{{ url_for('static',filename='results_style.css') }}">
+{% endblock %}
+
 {% block content %}
     <h1>Results</h1>
     <section id="response">
@@ -14,7 +18,7 @@
             number {{ response_selection }}. 
         </p>
         <p>
-            {{ response_sign_rate }}% of other respondants are also {{ response_sign }}. Your number was chosen by 
+            {{ response_sign_rate }}% of other respondants are also {{ response_sign }}. 
             {{ response_sign_slection_rate }} of other {{ response_sign }} respondants also picked 
             {{ response_selection}}
         </p>
@@ -23,5 +27,41 @@
             {{ response_personality_selection_rate }}% of others with your same personality type also chose the number {{ response_selection }}.
         </p>
     </section>
+    <div id="sign-container" class="section">
+        <h2>Your Sign</h2>
+        <p>
+            Your sign is <span class="sign accent-text"></span>.
+        </p>
+        <button onclick="generateBarChart(getSignData(),'#sign-bargraph .chart','Pisces')">Generate Graph</button>
+        <figure id="sign-bargraph" class="bargraph">
+            <div class="chart-container">
+                <div class="chart"></div>
+            </div>
+        </figure>
+    </div>
+    <div id="personality" class="section">
+        <h2>Your Personality</h2>
+        <p>
+            You have an <span class="mbti accent-text"></span> personality.
+        </p>
+        <button onclick="generateBarChart(getPersonalityData(),'#mbti-bargraph .chart','INTJ')">Generate Graph</button>
+        <figure id="mbti-bargraph" class="bargraph">
+            <div class="chart-container">
+                <div class="chart"></div>
+            </div>
+        </figure>
+    </div>
+{% endblock %}
+
+{% block local_scripts %} 
+<script>
+    const user_data = JSON.parse('{{ user_data | tojson | safe}}');
+</script>
+<script src="{{ url_for('static', filename='scripts.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        init(user_data.data,user_data.user_response.sign, user_data.user_response.mbti);
+    })
+</script>
 {% endblock %}
     
