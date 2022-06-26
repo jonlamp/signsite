@@ -1,1 +1,1 @@
-web: gunicorn app:signsite
+web: gunicorn app:app
