@@ -1,9 +1,29 @@
-import sqlite3
+import psycopg2
+import os
+from dotenv import load_dotenv,find_dotenv
 
-connection = sqlite3.connect('database.db')
-with open('schema.sql') as f:
-    connection.executescript(f.read())
+load_dotenv(find_dotenv())
+
+def get_postgre_con():
+    if 'DATABASE_URL' in os.environ:
+        con = psycopg2.connect(os.environ['DATABASE_URL'], sslmode='require')
+    else:
+        con = psycopg2.connect(
+            host = os.environ.get('PG_HOST'),
+            dbname="simple_db", 
+            user= os.environ.get('PG_USER'),
+            password = os.environ.get('PG_PW')
+        )
+    return con
+
+connection = get_postgre_con()
+#with open('schema.sql') as f:
+#    connection.executescript(f.read())
+#cursor = connection.cursor()
+
 cursor = connection.cursor()
+cursor.execute(open('schema.sql','r').read())
+  #.cursor().execute(open('schema.sql','r').read())
 
 #add star signs into 'signs' table
 zodiac_signs = [
@@ -39,12 +59,13 @@ mbti_types = [ #taken from 16personalities.com
   {"type":"ENTJ", "description":"The Commander"},
 ]
 for sign in zodiac_signs:
-    sql = "INSERT INTO signs ('star_sign','sign_description') VALUES ('" + sign["sign"] + "','" + sign['description'] + "');"
+    sql = "INSERT INTO signs (star_sign,sign_description) VALUES ('" + sign["sign"] + "','" + sign['description'] + "');"
     cursor.execute(sql)
     connection.commit()
 for type in mbti_types:
-    sql = "INSERT INTO personalities ('personality','personality_description') VALUES ('" + type["type"] + "','" + type['description'] + "');"
+    sql = "INSERT INTO personalities (personality,personality_description) VALUES ('" + type["type"] + "','" + type['description'] + "');"
     cursor.execute(sql)
     connection.commit()
 cursor.close()    
 connection.close()
+print("The databases have been reset.")

@@ -1,21 +1,21 @@
-DROP TABLE IF EXISTS signs;
-DROP TABLE IF EXISTS personalities;
-DROP TABLE IF EXISTS responses;
+DROP TABLE IF EXISTS signs CASCADE;
+DROP TABLE IF EXISTS personalities CASCADE;
+DROP TABLE IF EXISTS responses CASCADE;
 
 CREATE TABLE signs (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY ,
     star_sign TEXT UNIQUE NOT NULL,
     sign_description TEXT NOT NULL
 );
 
 CREATE TABLE personalities (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     personality TEXT UNIQUE NOT NULL,
     personality_description TEXT NOT NULL
 );
 
 CREATE TABLE responses (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id SERIAL PRIMARY KEY,
     sign_id INTEGER NOT NULL,
     personality_id INTEGER NOT NULL,
     selection INTEGER NOT NULL, 

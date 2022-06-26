@@ -1,33 +1,42 @@
 from cgi import test
 from distutils.command.config import config
-from os import curdir
+import os
+from dotenv import load_dotenv, find_dotenv
+import psycopg2, psycopg2.extras
 from flask import Flask, redirect, render_template, request, jsonify
 from scripts.utilities import *
 import sqlite3
 
 
 app=Flask(__name__)
+load_dotenv(find_dotenv())
 
 def get_db_connection(name):
     conn = sqlite3.connect(name)
     conn.row_factory = sqlite3.Row
     return conn
 
-#@app.route("/")
-#def hello_world():
-#    con = sqlite3.connect('database.db')
-#    cursor = con.cursor()
-#    return render_template('home.html')
+def get_postgre_con():
+    if 'DATABASE_URL' in os.environ:
+        con = psycopg2.connect(os.environ['DATABASE_URL'], sslmode='require')
+    else:
+        con = psycopg2.connect(
+            host = os.environ.get('PG_HOST'),
+            dbname="simple_db", 
+            user= os.environ.get('PG_USER'),
+            password = os.environ.get('PG_PW')
+        )
+    return con
 
-#@app.route("/check")
+
+
 @app.route("/")
 def check_db():
-    con = sqlite3.connect('database.db')
+    con = get_postgre_con()
     cursor = con.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    print(cursor.fetchall())
     cursor.execute("SELECT * FROM signs")
     signs = cursor.fetchall()
+    print(signs)
     cursor.execute("SELECT * FROM personalities")
     personalities = cursor.fetchall()
     return render_template('home.html',signs=signs, personalities=personalities)
@@ -43,25 +52,25 @@ def submit_handler():
     for tv in test_vars:
         if not tv.isnumeric():
             return render_template('error.html') #return error page if an input isn't numeric
-    con = sqlite3.connect('database.db')
+    con = get_postgre_con()
     cursor = con.cursor()
-    cursor.execute("INSERT INTO responses ('sign_id','personality_id','selection') VALUES (" + sign + "," + personality + "," + selection+");")
+    cursor.execute("INSERT INTO responses (sign_id,personality_id,selection) VALUES (" + sign + "," + personality + "," + selection+") RETURNING id;")
     con.commit()
-    id = cursor.lastrowid
+    id = cursor.fetchone()[0]
     con.close()
     return redirect("/submitted/" + str(id))
 
 @app.route("/submitted/<int:submission_id>")
 def submitted(submission_id):
     print("running submitted")
-    con = sqlite3.connect('database.db')
-    con.row_factory = sqlite3.Row
-    cursor = con.cursor()
+    con = get_postgre_con()
+    cursor = con.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
     if not isinstance(submission_id, int): #make sure the submission id is an integer for security reasons
         return render_template('error.html')
     #grab the user's submission
     cursor.execute("SELECT * FROM responses WHERE id = " + str(submission_id))
-    submission = dict(cursor.fetchone())
+    submission = cursor.fetchone()
+    print(submission)
     #now match these up to their table values
     cursor.execute("SELECT * FROM signs WHERE id = " + str(submission['sign_id']))
     sign_dict = dict(cursor.fetchone())
