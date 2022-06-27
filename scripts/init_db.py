@@ -46,7 +46,7 @@ mbti_types = [ #taken from 16personalities.com
   {"type":"INFJ", "description":"The Advocate"},
   {"type":"INTJ", "description":"The Architect"},
   {"type":"ISTP", "description":"The Virtuoso"},
-  {"type":"ISFp", "description":"The Adventurer"},
+  {"type":"ISFP", "description":"The Adventurer"},
   {"type":"INFP", "description":"The Mediator"},
   {"type":"INTP", "description":"The Logician"},
   {"type":"ESTP", "description":"The Entrepreneur"},
