@@ -1,7 +1,12 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+
 body {
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     background-color: #edf2f4;
-    padding: 10px 50px;
+    padding: 10px 50px 0px 50px;
     font-family: 'Open Sans', sans-serif;
     color: #2b2d42;
 }
@@ -19,3 +24,34 @@ button, input[type='submit'] {
     padding:10px;
     font-size: 1em;
 }
+#content {
+    margin-bottom: 120px;
+}
+footer {
+   background-color: #2b2d42;
+   color: #edf2f4;
+   padding: 40px 0vw;
+   overflow-x: hidden;
+   text-align: center;
+   margin: 0px -50px;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+}
+footer a{
+    color:#edf2f4;
+}
+
+@media screen and (max-width: 800px) {
+    body {
+     padding: 5px 30px;
+    }
+    form {
+        margin: 2vh 4vw;
+    }
+    footer {
+        position: static;
+        margin: -5px -30px;
+        width: 100vw;
+    }
+  }

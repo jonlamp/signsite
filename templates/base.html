@@ -3,6 +3,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Open+Sans&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
     {% block local_style %}
@@ -18,6 +19,11 @@
         {% block content %}
         {% endblock %}
     </div>
+    <footer>
+        <div>
+            Website created and designed by <a href="https://jalamp.com">Jon Lamp</a>.
+        </div>
+    </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {% block local_scripts %} 
     {% endblock %}

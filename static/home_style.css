@@ -56,4 +56,10 @@ input[type="submit"]{
     cursor: pointer;
     margin-top: 10px;
 }
-
+@media screen and (max-width: 800px) {
+    .radio-container {
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        text-align:center;
+    }
+  }
