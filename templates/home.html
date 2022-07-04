@@ -16,12 +16,6 @@
         </p>
     </main>
     <form action="/submit">
-        <!--<label for="sign">Select your star sign</label>
-        <select name="sign" id="sign">
-            {% for sign in signs %}
-                <option value="{{ sign[0] }}">{{ sign[1].capitalize() }}</option>
-            {% endfor %}
-        </select>-->
         <div class="img-radio-group" role="radiogroup" aria-label="sign" aria-labelledby="sign-head">
             <h2 id="sign-head">
                 Choose your sign
@@ -59,11 +53,6 @@
             {% endfor %}
             </div>
         </div>
-        <!--<select name="personality" id="personality">
-            {% for type in personalities %}
-                <option value="{{ type[0] }}">{{ type[1].upper() }}</option>
-            {% endfor %}
-        </select>-->
 
         <br>
         <div id="choice-radio-group" role="radiogroup" aria-labelledby="choice-head">
@@ -83,13 +72,6 @@
             {% endfor %}
             </div>
         </div>
-        <!--<label for="selection">Now select a number</label>
-        <select name="selection" id="selection">
-            {% for i in range(1,10) %}
-                <option value="{{ i }}">{{ i }}</option>
-            {% endfor %}
-        </select>
-        <br>-->
         <input type="submit">
     </form>
 {% endblock %}
